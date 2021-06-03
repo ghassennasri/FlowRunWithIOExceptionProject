@@ -1,0 +1,36 @@
+
+
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    maven { url "https://developer.marklogic.com/maven2/" }
+    jcenter()
+}
+dependencies {
+    // https://mvnrepository.com/artifact/com.marklogic/marklogic-data-hub
+    implementation group: 'com.marklogic', name: 'marklogic-data-hub', version: '5.2.6'
+    //implementation "com.marklogic:marklogic-data-hub:5.2.6"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testImplementation 'org.jboss.byteman:byteman:4.0.10'
+    testImplementation 'org.jboss.byteman:byteman-submit:4.0.10'
+    testImplementation 'org.jboss.byteman:byteman-install:4.0.10'
+    testImplementation 'org.jboss.byteman:byteman-bmunit5:4.0.10'
+    testImplementation 'com.github.starnowski.bmunit.extension:utils:1.0.1'
+    //testImplementation 'com.github.starnowski.bmunit.extension:junit4-rule:1.0.1'
+
+}
+
+test  {
+    jvmArgs "-Djdk.attach.allowAttachSelf=true","-Dcom.marklogic.client.okhttp.httplogginginterceptor.output=LOGGER", "-Dcom.marklogic.client.okhttp.httplogginginterceptor.level=BODY"
+    useJUnitPlatform()
+
+    if (System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.output')) {
+        systemProperty 'com.marklogic.client.okhttp.httplogginginterceptor.output', System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.output')
+    }
+    if (System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.level')) {
+        systemProperty 'com.marklogic.client.okhttp.httplogginginterceptor.level', System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.level')
+    }
+
+}
