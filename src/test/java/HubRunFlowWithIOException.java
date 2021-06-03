@@ -45,8 +45,9 @@ public class HubRunFlowWithIOException {
         System.out.println("Response: " + response);
         response.getStepResponses().forEach((x,y)->{
             System.out.println("--------------------------------------------");
-            System.out.println("Step "+x);
-            System.out.println("Response:"+y.stepOutput!=null?y.stepOutput.stream().collect(Collectors.joining()):"EMPTY");
+            System.out.println("Step:"+x);
+            System.out.println("stepOutput content:");
+            System.out.println(y.stepOutput!=null?y.stepOutput.stream().collect(Collectors.joining()):"EMPTY");
             System.out.println("--------------------------------------------");
         });
 
