@@ -1,5 +1,3 @@
-
-
 apply plugin: 'java'
 
 repositories {
@@ -7,6 +5,11 @@ repositories {
     maven { url "https://developer.marklogic.com/maven2/" }
     jcenter()
 }
+ext.username = findProperty('username')
+ext.password = findProperty('password')
+ext.flowName = findProperty('flowName')
+ext.host = findProperty('host')
+ext.steps = findProperty('steps')
 dependencies {
     // https://mvnrepository.com/artifact/com.marklogic/marklogic-data-hub
     implementation group: 'com.marklogic', name: 'marklogic-data-hub', version: '5.2.6'
@@ -22,8 +25,8 @@ dependencies {
 
 }
 
-test  {
-    jvmArgs "-Djdk.attach.allowAttachSelf=true","-Dcom.marklogic.client.okhttp.httplogginginterceptor.output=LOGGER", "-Dcom.marklogic.client.okhttp.httplogginginterceptor.level=BODY"
+test {
+    jvmArgs "-Djdk.attach.allowAttachSelf=true", "-Dcom.marklogic.client.okhttp.httplogginginterceptor.output=LOGGER", "-Dcom.marklogic.client.okhttp.httplogginginterceptor.level=BODY"
     useJUnitPlatform()
 
     if (System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.output')) {
@@ -32,5 +35,11 @@ test  {
     if (System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.level')) {
         systemProperty 'com.marklogic.client.okhttp.httplogginginterceptor.level', System.getProperty('com.marklogic.client.okhttp.httplogginginterceptor.level')
     }
+    systemProperty 'username', username
+    systemProperty 'password', password
+    systemProperty 'host', host
+    systemProperty 'flowName', flowName
+    systemProperty 'steps', steps
+
 
 }
